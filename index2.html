@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+    		<img class="mb-4" src="prudential.png" alt="" width="72" height="72">
+        <h1>CO Client Record</h1>
+
+		<h2 id="record"></h2>
+		
+		<h3>Customer Office Information</h3>
+
+		<h4 id="coRecord"></h4>
+
+        <h5>Message:</h5>
+
+		<h6 id="message"></h6>
+
+        <label for="name" class="col-lg-2 control-label">First Name</label>
+        <input id="firstName" type="text">
+
+        <button id="firstNameButton">Update First Name</button>
+
+        <label for="name" class="col-lg-2 control-label">Last Name</label>
+        <input id="lastName" type="text">
+
+		<button id="lastNameButton">Update Last Name</button>
+
+		<label for="name" class="col-lg-2 control-label">Suffix</label>
+        <input id="suffix" type="text">
+
+        <button id="suffixButton">Update Suffix</button>
+
+        <label for="name" class="col-lg-2 control-label">Gender</label>
+        <input id="gender" type="text">
+
+        <button id="genderButton">Update Gender</button>
+
+        <label for="name" class="col-lg-2 control-label">DOB</label>
+        <input id="dob" type="text">
+
+        <button id="dobButton">Update DOB</button>
+
+        <label for="name" class="col-lg-2 control-label">SSN</label>
+        <input id="ssn" type="text">
+
+		<button id="ssnButton">Update SSN</button>
+		
+		<label for="name" class="col-lg-2 control-label">House Number</label>
+        <input id="houseNumber" type="text">
+
+        <button id="houseNumberButton">Update House Number</button>
+
+        <label for="name" class="col-lg-2 control-label">Street Name</label>
+        <input id="streetName" type="text">
+
+		<button id="streetNameButton">Update Street Name</button>
+
+		<label for="name" class="col-lg-2 control-label">Zip Code</label>
+        <input id="zipCode" type="text">
+
+        <button id="zipCodeButton">Update Zip Code</button>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            
+            web3 = new Web3(new Web3.providers.HttpProvider("http://18.208.128.139:8545"));
+        }
+
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+
+        var pru_clientContract = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "viewCORecord",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newStreet",
+				"type": "string"
+			}
+		],
+		"name": "updateStreet",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newSuffix",
+				"type": "string"
+			}
+		],
+		"name": "updateSuffix",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newZipCode",
+				"type": "uint256"
+			}
+		],
+		"name": "updateZipCode",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newSS",
+				"type": "uint256"
+			}
+		],
+		"name": "updateSS",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newFName",
+				"type": "string"
+			}
+		],
+		"name": "updateFName",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newDOB",
+				"type": "uint256"
+			}
+		],
+		"name": "updateDOB",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "messages",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newGender",
+				"type": "string"
+			}
+		],
+		"name": "updateGender",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "viewRecord",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newHouseNum",
+				"type": "uint256"
+			}
+		],
+		"name": "updateHouseNum",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newLName",
+				"type": "string"
+			}
+		],
+		"name": "updateLName",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "first_name",
+				"type": "string"
+			},
+			{
+				"name": "last_name",
+				"type": "string"
+			},
+			{
+				"name": "suffix",
+				"type": "string"
+			},
+			{
+				"name": "social_security",
+				"type": "uint256"
+			},
+			{
+				"name": "zip_code",
+				"type": "uint256"
+			},
+			{
+				"name": "gender",
+				"type": "string"
+			},
+			{
+				"name": "house_number",
+				"type": "uint256"
+			},
+			{
+				"name": "dob",
+				"type": "uint256"
+			},
+			{
+				"name": "street_name",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+]);
+
+        var pru_client = pru_clientContract.at(get("ethAddress"));
+
+		function get(address) {
+			var result = null,
+				tmp = [];
+			window.location.search.substr(1).split("&").forEach(function (item){
+				tmp = item.split("=");
+				if(tmp[0] === address) result = decodeURIComponent(tmp[1]);
+			});
+			return result;
+		}
+        
+        console.log(pru_client);
+
+		web3.personal.unlockAccount(web3.eth.coinbase, "test");
+
+        pru_client.viewRecord(function(error, result){
+            if(!error)
+                {
+                    $("#record").html('First Name: ' + result[0] + "<p></p>" + 'Last Name: ' + result[1] + "<p></p>" +
+					 'Suffix: ' + result[2] + "<p></p>" +  'Gender: ' + result[5] + "<p></p>" + 
+					 'DOB: ' + result[7] + "<p></p>" + 'SSN: ' + result[3] + "<p></p>" + 'House Number: ' + result[6] +
+					 "<p></p>" + 'Street Name: ' + result[8] + "<p></p>" + 'Zip Code: ' + result[4]);
+                    console.log(result);
+                }
+            else
+                console.error(error);
+        });
+
+		pru_client.viewCORecord(function(error, result){
+            if(!error)
+                {
+                    $("#coRecord").html('Customer Office: ' + result[0] + "<p></p>" + 'Policy Number: ' + result[1]);
+                    console.log(result);
+                }
+            else
+                console.error(error);
+        });
+
+         pru_client.messages(function(error, result){
+            if(!error)
+                {
+                    $("#message").html(result);
+                    console.log(result);
+                }
+            else
+                console.error(error);
+        });
+
+        $("#suffixButton").click(function() {
+            pru_client.updateSuffix($("#suffix").val());
+        });
+
+        $("#firstNameButton").click(function() {
+            pru_client.updateFName($("#firstName").val());
+        });
+
+        $("#lastNameButton").click(function() {
+            pru_client.updateLName($("#lastName").val());
+        });
+
+        $("#genderButton").click(function() {
+            pru_client.updateGender($("#gender").val());
+        });
+
+        $("#dobButton").click(function() {
+            pru_client.updateDOB($("#dob").val());
+        });
+
+        $("#ssnButton").click(function() {
+            pru_client.updateSS($("#ssn").val());
+        });
+
+		$("#houseNumberButton").click(function() {
+            pru_client.updateHouseNum($("#houseNumber").val());
+        });
+
+		$("#streetNameButton").click(function() {
+            pru_client.updateStreet($("#streetName").val());
+        });
+
+		$("#zipCodeButton").click(function() {
+            pru_client.updateZipCode($("#zipCode").val());
+        });
+        
+    </script>
+
+</body>
+</html>
